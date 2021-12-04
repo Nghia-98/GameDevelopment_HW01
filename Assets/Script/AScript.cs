@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class AScript : MonoBehaviour {
     [SerializeField] float moveSpeed = 8f;
+    [SerializeField] int rotationSpeed = 90;
 
     // The first gameObjectB from Unity UI
     [SerializeField] GameObject gameObjectB;
+
+    bool isRotate = false;
 
     void Awake() {
 
@@ -80,6 +83,22 @@ public class AScript : MonoBehaviour {
                     Destroy(gameObjectsB[i], 2);
                 }
             }
+        }
+        #endregion
+
+        #region Listen event KeyDown (R) to Rotation GameObject_A
+
+        if (Input.GetKeyDown(KeyCode.R)) {
+            Debug.Log("You are press key R");
+
+            isRotate = !isRotate;
+           
+        }
+
+        if(isRotate) {
+            transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
+        } else {
+            transform.Rotate(0, 0, 0);
         }
         #endregion
     }
