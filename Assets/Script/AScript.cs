@@ -9,7 +9,10 @@ public class AScript : MonoBehaviour {
     // The first gameObjectB from Unity UI
     [SerializeField] GameObject gameObjectB;
 
-    bool isRotate = false;
+    bool isRotateA = false;
+    bool isRotateB = false;
+
+    private bool isUp = false;
 
     void Awake() {
 
@@ -57,7 +60,7 @@ public class AScript : MonoBehaviour {
             Debug.Log("You are press key Space");
             // Random positon
             Vector3 randomPos = new Vector3(Random.Range(-4, 3), Random.Range(10, 10 + 1612426 % 10), Random.Range(-14, -5));
-           
+
             // create new GameObject_B
             GameObject newGameObject_B = Instantiate(gameObjectB, randomPos, Quaternion.identity);
 
@@ -78,7 +81,8 @@ public class AScript : MonoBehaviour {
 
             if (gameObjectsB.Length == 0) {
                 Debug.Log("No game objects are tagged with 'GameObjectB'");
-            } else {
+            }
+            else {
                 for (int i = 0; i < gameObjectsB.Length; i++) {
                     Destroy(gameObjectsB[i], 2);
                 }
@@ -91,14 +95,61 @@ public class AScript : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.R)) {
             Debug.Log("You are press key R");
 
-            isRotate = !isRotate;
-           
+            isRotateA = !isRotateA;
         }
 
-        if(isRotate) {
+        if (isRotateA) {
             transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
-        } else {
+        }
+        else {
             transform.Rotate(0, 0, 0);
+        }
+        #endregion
+
+        #region Listen event KeyDown (T) to Rotation GameObject_B
+
+        if (Input.GetKeyDown(KeyCode.T)) {
+            Debug.Log("You are press key T");
+
+            isRotateB = !isRotateB;
+        }
+
+        if (isRotateB) {
+            GameObject[] gameObjectsB;
+            gameObjectsB = GameObject.FindGameObjectsWithTag("GameObjectB");
+
+            if (gameObjectsB.Length == 0) {
+                Debug.Log("There are no GameObjetB");
+                isRotateB = false;
+                isUp = false;
+            }
+            else {
+                for (int i = 0; i < gameObjectsB.Length; i++) {
+                    gameObjectsB[i].GetComponent<Rigidbody>().useGravity = false;
+                    gameObjectsB[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
+                    gameObjectsB[i].GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+                    if (!isUp) {
+                        Vector3 curPos = gameObjectsB[i].transform.position;
+                        gameObjectsB[i].transform.position = new Vector3(curPos.x, curPos.y + 2, curPos.z);
+                    }
+
+                    gameObjectsB[i].transform.Rotate(rotationSpeed * Time.deltaTime, 0, 0);
+                }
+                isUp = true;
+            }
+        }
+        else {
+            GameObject[] gameObjectsB;
+            gameObjectsB = GameObject.FindGameObjectsWithTag("GameObjectB");
+
+            if (gameObjectsB.Length > 0) {
+                for (int i = 0; i < gameObjectsB.Length; i++) {
+                    gameObjectsB[i].transform.Rotate(0, 0, 0);
+                    gameObjectsB[i].GetComponent<Rigidbody>().useGravity = true;
+                }
+            }
+            isUp = false;
         }
         #endregion
     }
