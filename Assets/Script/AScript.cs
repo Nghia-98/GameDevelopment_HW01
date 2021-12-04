@@ -5,6 +5,9 @@ using UnityEngine;
 public class AScript : MonoBehaviour {
     [SerializeField] float moveSpeed = 8f;
 
+    // The first gameObjectB from Unity UI
+    [SerializeField] GameObject gameObjectB;
+
     void Awake() {
 
     }
@@ -18,8 +21,6 @@ public class AScript : MonoBehaviour {
         Debug.Log("GameObject_A position: " + transform.position);
         #endregion
 
-
-
     }
 
     // Update is called once per frame
@@ -28,7 +29,7 @@ public class AScript : MonoBehaviour {
 
         // Move to left
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
-            transform.position += new Vector3(1, 0, 0) * moveSpeed * Time.deltaTime; 
+            transform.position += new Vector3(1, 0, 0) * moveSpeed * Time.deltaTime;
         }
 
         // Move to right
@@ -45,7 +46,42 @@ public class AScript : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) {
             transform.position += new Vector3(0, -1, 0) * moveSpeed * Time.deltaTime;
         }
+        #endregion
 
+        #region Listen event KeyDown (Space) to Spawn GameObject_B and that has AddForce + Gravity
+
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            Debug.Log("You are press key Space");
+            // Random positon
+            Vector3 randomPos = new Vector3(Random.Range(-4, 3), Random.Range(10, 10 + 1612426 % 10), Random.Range(-14, -5));
+           
+            // create new GameObject_B
+            GameObject newGameObject_B = Instantiate(gameObjectB, randomPos, Quaternion.identity);
+
+            // Add Gravity and AddForce
+            Rigidbody newRb = newGameObject_B.GetComponent<Rigidbody>();
+            newRb.useGravity = true;
+            newRb.AddForce(Vector3.forward * 200);
+        }
+        #endregion
+
+        #region Listen event KeyDown (Q) to destroy GameObject_B after 2s
+
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            Debug.Log("You are press key Q");
+
+            GameObject[] gameObjectsB;
+            gameObjectsB = GameObject.FindGameObjectsWithTag("GameObjectB");
+
+            if (gameObjectsB.Length == 0) {
+                Debug.Log("No game objects are tagged with 'GameObjectB'");
+            } else {
+                for (int i = 0; i < gameObjectsB.Length; i++) {
+                    Destroy(gameObjectsB[i], 2);
+                }
+            }
+        }
         #endregion
     }
 }
+
