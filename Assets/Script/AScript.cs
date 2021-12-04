@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AScript : MonoBehaviour {
     [SerializeField] float moveSpeed = 8f;
+    [SerializeField] float moveSpeedAutoY = 2 + 1612426 % 10;
     [SerializeField] int rotationSpeed = 90;
 
     // The first gameObjectB from Unity UI
@@ -11,6 +12,7 @@ public class AScript : MonoBehaviour {
 
     bool isRotateA = false;
     bool isRotateB = false;
+    bool isMoveVerticalA = false;
 
     private bool isUp = false;
 
@@ -151,6 +153,21 @@ public class AScript : MonoBehaviour {
             }
             isUp = false;
         }
+        #endregion
+
+        #region Move GameObject_A on Vertical
+
+        if (Input.GetKeyDown(KeyCode.M)) {
+            Debug.Log("You are press key M");
+
+            isMoveVerticalA = !isMoveVerticalA;
+        }
+
+        if (isMoveVerticalA) {
+            float y = Mathf.PingPong(Time.time * moveSpeedAutoY , 1) * 6 - 3;
+            transform.position += new Vector3(0, y, 0);
+        }
+
         #endregion
     }
 }
