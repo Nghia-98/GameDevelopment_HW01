@@ -13,9 +13,11 @@ GameObject:
   - component: {fileID: 3383342502418275923}
   - component: {fileID: 3383342502418275922}
   - component: {fileID: -6249427360196726431}
+  - component: {fileID: 4889125632169940578}
+  - component: {fileID: 1174321636258032050}
   m_Layer: 0
   m_Name: Game_Object_B
-  m_TagString: go_b
+  m_TagString: GameObjectB
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,3 +115,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4889125632169940578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3383342502418275917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8330bf76758eaf540acf3bfd2a68275e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1174321636258032050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3383342502418275917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a268151fe62cb34d891fabf738584f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
