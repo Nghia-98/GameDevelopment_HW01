@@ -6,6 +6,8 @@ public class AScript : MonoBehaviour {
     [SerializeField] float moveSpeed = 8f;
     [SerializeField] float moveSpeedAutoY = 2 + 1612426 % 10;
     [SerializeField] int rotationSpeed = 90;
+    int point = 0;
+    HandlePoints pointDealerScript;
 
     // The first gameObjectB from Unity UI
     [SerializeField] GameObject gameObjectB;
@@ -17,11 +19,13 @@ public class AScript : MonoBehaviour {
     private bool isUp = false;
 
     void Awake() {
-
+      
     }
 
     // Start is called before the first frame update
     void Start() {
+        pointDealerScript = GetComponent<HandlePoints>();
+
         #region Random position for Game_Object_A at (0, X, 0), with X in [10, 20]
 
         transform.position = new Vector3(0, Random.Range(10, 20), 0);
@@ -169,6 +173,24 @@ public class AScript : MonoBehaviour {
         }
 
         #endregion
+
+
+        // Auto update point from script handlePoints
+        point = pointDealerScript.getPoint();
     }
+
+    #region Show Point OnGui
+
+    void OnGUI() {
+        GUIStyle style = new GUIStyle();
+        style.fontSize = 50;
+        style.normal.textColor = Color.blue;
+
+        GUI.Label(new Rect(10, 10, 100, 20), "Points: " + point, style);
+    }
+
+    #endregion
+
+
 }
 
